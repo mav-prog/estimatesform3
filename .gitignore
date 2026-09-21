@@ -29,3 +29,5 @@ target
 dist-web
 estimates/out/
 __pycache__/
+estimates/jobs/*
+!estimates/jobs/sample-stucco-test-sheet.json
