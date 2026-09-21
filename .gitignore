@@ -28,3 +28,4 @@ src-tauri/target
 target
 dist-web
 estimates/out/
+__pycache__/
