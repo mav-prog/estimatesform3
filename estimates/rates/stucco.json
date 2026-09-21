@@ -1,7 +1,7 @@
 {
   "trade": "Stucco",
   "scope_code": "STC",
-  "status": "DRAFT RATES - square-foot rate and above-12-ft rate are DFW placeholders pending Marco's review; accessories are included in the square-foot rate per Marco",
+  "status": "Stucco square-foot rate set by Marco (2026-09-21); above-12-ft rate is still a DFW placeholder pending review; accessories are included in the square-foot rate per Marco",
   "rounding": {
     "sq ft": "ceil",
     "ft": "ceil",
@@ -13,7 +13,7 @@
       "name": "3-Coat Cement Stucco System over Metal Lath",
       "description": "Furnish and install a three-coat Portland cement stucco system: two layers of Grade D building paper (or approved WRB), 2.5 lb self-furring galvanized metal lath fastened per ASTM C1063, 3/8\" scratch coat, 3/8\" brown coat moist-cured per ASTM C926, and 1/8\" finish coat in owner-selected color and texture. Casing bead, weep screed, corner bead, control joints and expansion joints are included where required. Quantity is net wall area after deducting openings.",
       "unit": "sq ft",
-      "unit_price": 9.5
+      "unit_price": 11.0
     },
     "TRIM_TOP_CASING_BEAD": {
       "name": "Casing Bead / J-Mold Termination",
