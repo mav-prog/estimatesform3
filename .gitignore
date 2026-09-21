@@ -27,3 +27,4 @@ dist-ssr
 src-tauri/target
 target
 dist-web
+estimates/out/

@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-21",
+  "rates": "stucco",
+  "client": {
+    "name": "Sample Client",
+    "company": "Takeoff verification sample (generated test sheet)",
+    "email": "",
+    "phone": ""
+  },
+  "project": "Stucco Test Sheet A-201, East Elevation",
+  "scope_summary": "3-coat cement stucco over metal lath at the east elevation, net of openings, with top termination trim and opening treatment.",
+  "lines": [
+    { "code": "STUCCO_3COAT", "qty": 354.79, "detail": "East elevation, 40 ft x 10 ft, net of two windows and one door.", "source": "ProTakeoff item 'Stucco - East Elevation'" },
+    { "code": "TRIM_TOP_CASING_BEAD", "qty": 40.0, "detail": "Top of wall.", "source": "ProTakeoff item 'Trim - Top Edge'" },
+    { "code": "OPENING_TREATMENT", "qty": 3, "detail": "Two windows (4 ft x 3 ft) and one door (3 ft x 7 ft).", "source": "ProTakeoff item 'Openings'" }
+  ],
+  "owner_furnished_note": "",
+  "exclusions_extra": "Base-of-wall weep screed, corner beads and control joints were not part of this sample takeoff and are not included.",
+  "output": "M3_Estimate_SampleClient_Stucco.pdf"
+}
