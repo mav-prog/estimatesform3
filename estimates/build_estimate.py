@@ -99,27 +99,39 @@ def lines_from_takeoff(items, rates):
 
 
 def price_lines(lines, rates):
-    priced = []
+    """Price the lines. Items whose rate says included_in are not priced; they are
+    reported as quantities included in their parent line's price."""
+    priced, included = [], []
     for ln in lines:
         rate = rates["items"][ln["code"]]
         unit = rate["unit"]
         raw = float(ln["qty"])
         assert raw > 0, f"non-positive quantity for {ln['code']}"
         qty = round_qty(raw, unit, rates["rounding"][unit])
-        unit_price = float(rate["unit_price"])
+        if rate.get("included_in"):
+            parent = rates["items"][rate["included_in"]]
+            included.append({**ln, "name": rate["name"], "unit": unit, "raw_qty": raw, "qty": qty, "parent": parent["name"], "parent_code": rate["included_in"]})
+            continue
+        unit_price = ln.get("unit_price", rate.get("unit_price"))
+        if unit_price is None:
+            raise SystemExit(f"{ln['code']} is priced per job: set unit_price on that line in the job file")
+        unit_price = float(unit_price)
         assert unit_price > 0, f"non-positive unit price for {ln['code']}"
         total = round(qty * unit_price, 2)
         priced.append({**ln, "name": rate["name"], "description": rate["description"], "unit": unit,
                        "raw_qty": raw, "qty": qty, "unit_price": unit_price, "total": total})
     grand = round(sum(p["total"] for p in priced), 2)
     assert abs(grand - sum(round(p["qty"] * p["unit_price"], 2) for p in priced)) < 0.005
-    return priced, grand
+    priced_codes = {p["code"] for p in priced}
+    for inc in included:
+        assert inc["parent_code"] in priced_codes, f"{inc['code']} is included in {inc['parent_code']}, which is not on this estimate"
+    return priced, included, grand
 
 
 def build(job, rates, out_path, takeoff_note=None):
     date = dt.date.fromisoformat(job["date"]) if job.get("date") else dt.date.today()
     est_no = job.get("estimate_number") or f"M3-{date.strftime('%m%d%y')}-{rates['scope_code']}"
-    priced, grand = price_lines(job["lines"], rates)
+    priced, included, grand = price_lines(job["lines"], rates)
 
     body = ParagraphStyle("body", fontName="Helvetica", fontSize=9.5, leading=13, textColor=DARK)
     small = ParagraphStyle("small", parent=body, fontSize=8, leading=10.5, textColor=GRAY)
@@ -191,7 +203,15 @@ def build(job, rates, out_path, takeoff_note=None):
         notes.append(esc(job["owner_furnished_note"]))
     if takeoff_note:
         notes.append(esc(takeoff_note))
-    srcs = [p["source"] for p in priced if p.get("source")]
+    if included:
+        parts = []
+        for inc in included:
+            part = f"{fmt_qty(inc['qty'], inc['unit'])} {inc['name'].lower()}"
+            if inc.get("detail"):
+                part += f" ({inc['detail'].rstrip('.')})"
+            parts.append(part)
+        notes.append(f"Included in the {esc(included[0]['parent'].lower())} price: " + "; ".join(esc(x) for x in parts) + ".")
+    srcs = [p["source"] for p in priced + included if p.get("source")]
     if srcs:
         notes.append("Quantities from takeoff: " + "; ".join(esc(s) for s in srcs) + ". Areas and lengths rounded up to whole units for pricing.")
     for n in notes:
@@ -235,7 +255,7 @@ def build(job, rates, out_path, takeoff_note=None):
         canvas.restoreState()
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
-    return est_no, priced, grand
+    return est_no, priced, included, grand
 
 
 def main():
@@ -263,10 +283,12 @@ def main():
 
     out = Path(args.out) if args.out else ROOT / "out" / job.get("output", "M3_Estimate.pdf")
     out.parent.mkdir(parents=True, exist_ok=True)
-    est_no, priced, grand = build(job, rates, out, takeoff_note)
+    est_no, priced, included, grand = build(job, rates, out, takeoff_note)
     print(f"{est_no}  ->  {out}")
     for p in priced:
         print(f"  {p['code']:<22} {fmt_qty(p['qty'], p['unit']):>14} x {money(p['unit_price']):>10} = {money(p['total']):>12}   (takeoff {p['raw_qty']:.2f})")
+    for inc in included:
+        print(f"  {inc['code']:<22} {fmt_qty(inc['qty'], inc['unit']):>14}   included in {inc['parent_code']}")
     print(f"  {'GRAND TOTAL':<22} {'':>14}   {'':>10}   {money(grand):>12}")
     if "DRAFT" in rates.get("status", ""):
         print(f"NOTE: {rates['status']}", file=sys.stderr)

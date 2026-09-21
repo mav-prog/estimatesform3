@@ -1,50 +1,55 @@
 {
   "trade": "Stucco",
   "scope_code": "STC",
-  "status": "DRAFT RATES - initial DFW market placeholders, to be reviewed by Marco before any estimate is sent",
-  "rounding": { "sq ft": "ceil", "ft": "ceil", "EA": "ceil", "LS": "none" },
+  "status": "DRAFT RATES - square-foot rate and above-12-ft rate are DFW placeholders pending Marco's review; accessories are included in the square-foot rate per Marco",
+  "rounding": {
+    "sq ft": "ceil",
+    "ft": "ceil",
+    "EA": "ceil",
+    "LS": "none"
+  },
   "items": {
     "STUCCO_3COAT": {
       "name": "3-Coat Cement Stucco System over Metal Lath",
-      "description": "Furnish and install a three-coat Portland cement stucco system: two layers of Grade D building paper (or approved WRB), 2.5 lb self-furring galvanized metal lath fastened per ASTM C1063, 3/8\" scratch coat, 3/8\" brown coat moist-cured per ASTM C926, and 1/8\" finish coat in owner-selected color and texture. Quantity is net wall area after deducting openings.",
+      "description": "Furnish and install a three-coat Portland cement stucco system: two layers of Grade D building paper (or approved WRB), 2.5 lb self-furring galvanized metal lath fastened per ASTM C1063, 3/8\" scratch coat, 3/8\" brown coat moist-cured per ASTM C926, and 1/8\" finish coat in owner-selected color and texture. Casing bead, weep screed, corner bead, control joints and expansion joints are included where required. Quantity is net wall area after deducting openings.",
       "unit": "sq ft",
-      "unit_price": 9.50
+      "unit_price": 9.5
     },
     "TRIM_TOP_CASING_BEAD": {
       "name": "Casing Bead / J-Mold Termination",
       "description": "Galvanized casing bead at wall terminations, set plumb and level, with backer rod and sealant at the finished edge.",
       "unit": "ft",
-      "unit_price": 5.50
+      "included_in": "STUCCO_3COAT"
     },
     "OPENING_TREATMENT": {
       "name": "Opening Treatment at Windows and Doors",
-      "description": "Casing bead at each jamb and head, flashing integration with the weather-resistive barrier, and backer rod with sealant at the stucco-to-frame joint. Priced per opening.",
+      "description": "Casing bead at jambs and head, flashing integration with the weather-resistive barrier, and backer rod with sealant at the stucco-to-frame joint. Included in the stucco system price; openings are deducted from the wall area.",
       "unit": "EA",
-      "unit_price": 85.00
+      "included_in": "STUCCO_3COAT"
     },
     "WEEP_SCREED": {
       "name": "Foundation Weep Screed",
       "description": "Galvanized weep screed at the base of wall, set a minimum of 4\" above grade or 2\" above paving, lapped by the weather-resistive barrier.",
       "unit": "ft",
-      "unit_price": 6.50
+      "included_in": "STUCCO_3COAT"
     },
     "CORNER_BEAD": {
       "name": "Corner Bead",
       "description": "Galvanized corner bead at outside corners, set plumb with the finish plane on both faces.",
       "unit": "ft",
-      "unit_price": 4.75
+      "included_in": "STUCCO_3COAT"
     },
     "CONTROL_JOINT": {
       "name": "Control Joint",
       "description": "Galvanized one-piece control joint installed per ASTM C1063 spacing (max 144 sq ft panels, 18 ft between joints), lath cut at the joint.",
       "unit": "ft",
-      "unit_price": 8.00
+      "included_in": "STUCCO_3COAT"
     },
     "EXPANSION_JOINT": {
       "name": "Expansion Joint",
       "description": "Two-piece galvanized expansion joint at building expansion lines and dissimilar substrates.",
       "unit": "ft",
-      "unit_price": 9.50
+      "included_in": "STUCCO_3COAT"
     },
     "HIGH_WORK": {
       "name": "Scaffolding / Lift for Work Above 12 ft",
@@ -53,21 +58,45 @@
       "unit_price": 1.25
     },
     "MOBILIZATION": {
-      "name": "Mobilization and Site Setup",
-      "description": "Mobilization, protection of adjacent surfaces, mixing station and daily cleanup.",
+      "name": "Mobilization",
+      "description": "Mobilization sized to the scaffolding requirement for the job. Priced per job; set the amount on the job line.",
       "unit": "LS",
-      "unit_price": 350.00
+      "unit_price": null
     }
   },
   "takeoff_map": [
-    { "match": "stucco", "code": "STUCCO_3COAT" },
-    { "match": "weep", "code": "WEEP_SCREED" },
-    { "match": "corner", "code": "CORNER_BEAD" },
-    { "match": "control", "code": "CONTROL_JOINT" },
-    { "match": "expansion", "code": "EXPANSION_JOINT" },
-    { "match": "top edge|casing|j-?mold|termination|trim", "code": "TRIM_TOP_CASING_BEAD" },
-    { "match": "opening|window|door", "code": "OPENING_TREATMENT" },
-    { "match": "high work|scaffold|lift", "code": "HIGH_WORK" }
+    {
+      "match": "stucco",
+      "code": "STUCCO_3COAT"
+    },
+    {
+      "match": "weep",
+      "code": "WEEP_SCREED"
+    },
+    {
+      "match": "corner",
+      "code": "CORNER_BEAD"
+    },
+    {
+      "match": "control",
+      "code": "CONTROL_JOINT"
+    },
+    {
+      "match": "expansion",
+      "code": "EXPANSION_JOINT"
+    },
+    {
+      "match": "top edge|casing|j-?mold|termination|trim",
+      "code": "TRIM_TOP_CASING_BEAD"
+    },
+    {
+      "match": "opening|window|door",
+      "code": "OPENING_TREATMENT"
+    },
+    {
+      "match": "high work|scaffold|lift",
+      "code": "HIGH_WORK"
+    }
   ],
   "scope_intro_exceptions": "",
   "scope_sections": [
@@ -83,8 +112,9 @@
       "title": "Lath and Accessories",
       "bullets": [
         "2.5 lb/sq yd self-furring galvanized expanded metal lath (ASTM C847), long dimension across supports, lapped 1\" at sides and 2\" at ends, fastened 7\" o.c. into framing per ASTM C1063.",
-        "Galvanized casing bead at terminations and around openings as listed in the estimate details.",
-        "Corner bead, weep screed, control joints and expansion joints only where listed in the estimate details."
+        "Galvanized casing bead at terminations and around openings, weep screed at the base of wall set a minimum of 4\" above grade or 2\" above paving, and corner bead at outside corners.",
+        "Control joints and expansion joints per ASTM C1063 (panels not exceeding 144 sq ft, joints not more than 18 ft apart, and at building expansion lines).",
+        "All of the above accessories are included in the stucco system price where required."
       ]
     },
     {
@@ -110,6 +140,6 @@
       ]
     }
   ],
-  "exclusions": "This estimate does not include painting, sealers or elastomeric coatings over the finish coat; repair or replacement of sheathing, framing or existing substrates; window and door flashings (integration with existing flashings only); engineering, permits or inspections fees; demolition or removal of existing finishes; scaffolding or lifts for work above 12 ft unless listed; sealant at joints other than the listed openings and terminations; control or expansion joints not listed in the estimate details; repair of landscaping, hardscape or irrigation; and color or texture changes after the finish sample is approved.",
+  "exclusions": "This estimate does not include painting, sealers or elastomeric coatings over the finish coat; repair or replacement of sheathing, framing or existing substrates; window and door flashings (integration with existing flashings only); engineering, permits or inspection fees; demolition or removal of existing finishes; scaffolding or lifts for work above 12 ft unless listed; sealant at dissimilar materials other than at stucco terminations and openings; repair of landscaping, hardscape or irrigation; and color or texture changes after the finish sample is approved.",
   "payment_terms": "To be discussed and agreed upon prior to project commencement. Estimate valid for 30 days."
 }
