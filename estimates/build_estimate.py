@@ -94,7 +94,7 @@ def lines_from_takeoff(items, rates):
         unit = norm_unit(it.get("unit", rates["items"][code]["unit"]))
         if unit != rates["items"][code]["unit"]:
             raise SystemExit(f"unit mismatch for {label!r}: takeoff {unit} vs rate {rates['items'][code]['unit']}")
-        lines.append({"code": code, "qty": qty, "source": f"ProTakeoff item {label!r}", "detail": ""})
+        lines.append({"code": code, "qty": qty, "source": f"ProTakeoff item {label!r}", "detail": f"Takeoff item: {label}."})
     return lines, unmapped
 
 
@@ -182,8 +182,13 @@ def build(job, rates, out_path, takeoff_note=None):
     # Estimate details
     story.append(Paragraph("Estimate Details", h))
     rows = [[Paragraph("Description", head_w), Paragraph("Qty", head_wr), Paragraph("Unit Price", head_wr), Paragraph("Total", head_wr)]]
+    seen = set()
     for p in priced:
-        desc = f"<b>{esc(p['name'])}.</b> {esc(p['description'])}"
+        if p["code"] in seen:
+            desc = f"<b>{esc(p['name'])}.</b> As specified above."
+        else:
+            desc = f"<b>{esc(p['name'])}.</b> {esc(p['description'])}"
+            seen.add(p["code"])
         if p.get("detail"):
             desc += f" {esc(p['detail'])}"
         rows.append([Paragraph(desc, cell), Paragraph(fmt_qty(p["qty"], p["unit"]), cell_r),

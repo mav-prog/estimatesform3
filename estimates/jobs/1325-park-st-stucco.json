@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-21",
+  "rates": "stucco",
+  "client": {
+    "name": "Client to be confirmed",
+    "company": "",
+    "email": "",
+    "phone": ""
+  },
+  "project": "1325 Park St. - The Sher'a, Plan No. 3691 (David E. Wiggins Architect), exterior elevations A3-A4, game room excluded",
+  "scope_summary": "3-coat cement stucco over metal lath on all exterior stucco surfaces shown on the Front, Right, Left and Rear elevations, net of openings and stone veneer; work above 12 ft included.",
+  "lines": [],
+  "owner_furnished_note": "",
+  "exclusions_extra": "The crossed-out game room is excluded. Courtyard-facing walls shown on the building sections (loggia, entry and lanai) are not included in this quantity and will be added once the courtyard elevations are provided.",
+  "output": "M3_Estimate_1325ParkSt_Stucco.pdf"
+}
