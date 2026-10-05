@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TakeoffItem, ToolType, Unit } from '../types';
 import { evaluateFormula, convertValue, toVariableName } from '../utils/math';
-import { FileSpreadsheet, ArrowLeft, Trash2, GripVertical, Plus, ChevronDown, ChevronRight, Edit2, CornerDownRight, FileText, Tag, Loader2 } from 'lucide-react';
+import { FileSpreadsheet, ArrowLeft, Trash2, GripVertical, Plus, ChevronDown, ChevronRight, Edit2, CornerDownRight, FileText, Tag, Loader2, Receipt } from 'lucide-react';
+import M3EstimatePanel from './M3EstimatePanel';
 import * as XLSX from 'xlsx';
 import { useToast } from '../contexts/ToastContext';
 import PromptModal from './PromptModal';
@@ -15,15 +16,16 @@ import { Badge } from "@/components/ui/badge";
 interface EstimatesViewProps {
     items: TakeoffItem[];
     onBack: () => void;
+    projectName: string;
     onDeleteItem: (id: string) => void;
     onUpdateItem: (id: string, updates: Partial<TakeoffItem>) => void;
     onReorderItems: (items: TakeoffItem[]) => void;
     onEditItem: (item: TakeoffItem) => void;
 }
 
-const EstimatesView: React.FC<EstimatesViewProps> = ({ items, onBack, onDeleteItem, onUpdateItem, onReorderItems, onEditItem }) => {
+const EstimatesView: React.FC<EstimatesViewProps> = ({ items, onBack, projectName, onDeleteItem, onUpdateItem, onReorderItems, onEditItem }) => {
     const { addToast } = useToast();
-    const [activeTab, setActiveTab] = useState<'estimates' | 'templates'>('estimates');
+    const [activeTab, setActiveTab] = useState<'estimates' | 'templates' | 'm3'>('estimates');
     const [groups, setGroups] = useState<string[]>([]);
     const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
     const [draggedGroup, setDraggedGroup] = useState<string | null>(null);
@@ -473,7 +475,7 @@ const EstimatesView: React.FC<EstimatesViewProps> = ({ items, onBack, onDeleteIt
                         <div>
                             <h1 className="text-2xl font-semibold text-foreground">Project Estimates</h1>
                             <p className="text-muted-foreground text-sm mt-0.5">
-                                {activeTab === 'estimates' ? 'Drag rows to reorder or move between groups.' : 'Manage your item templates for quick reuse.'}
+                                {activeTab === 'estimates' ? 'Drag rows to reorder or move between groups.' : activeTab === 'templates' ? 'Manage your item templates for quick reuse.' : 'Price the takeoff with an M3 rate card and generate the estimate PDF.'}
                             </p>
                         </div>
                     </div>
@@ -518,6 +520,15 @@ const EstimatesView: React.FC<EstimatesViewProps> = ({ items, onBack, onDeleteIt
                             }`}
                     >
                         <Tag size={16} /> Templates
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('m3')}
+                        className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'm3'
+                            ? 'border-primary text-primary bg-primary/5'
+                            : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            }`}
+                    >
+                        <Receipt size={16} /> M3 Estimate
                     </button>
                 </div>
 
@@ -806,6 +817,8 @@ const EstimatesView: React.FC<EstimatesViewProps> = ({ items, onBack, onDeleteIt
                             </div>
                         )}
                     </>
+                ) : activeTab === 'm3' ? (
+                    <M3EstimatePanel items={items} projectName={projectName} />
                 ) : (
                     <div className="h-[calc(100vh-200px)]">
                         <TemplateManager mode="manage" />
