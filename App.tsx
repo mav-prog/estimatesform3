@@ -17,7 +17,8 @@ import EstimatesView from './components/EstimatesView';
 import ThreeDView from './components/ThreeDView';
 import PDFSearch from './components/PDFSearch';
 import { ToolType, ProjectData, TakeoffItem, Shape, Unit, PlanSet, LegendSettings } from './types';
-import { PresetScale, getAreaUnitFromLinear, isPointInPolygon } from './utils/geometry';
+import { PresetScale, getAreaUnitFromLinear, isPointInPolygon, calculatePolygonArea, getScaledArea, generateColor } from './utils/geometry';
+import { detectStuccoRegions, defaultDetectParams } from './utils/stuccoDetect';
 import { useToast } from './contexts/ToastContext';
 import { generateMarkupPDF } from './utils/pdfExport';
 import { Loader2 } from 'lucide-react';
@@ -77,6 +78,7 @@ const AppContent: React.FC = () => {
   const [selectedShapes, setSelectedShapes] = useState<{ itemId: string, shapeId: string }[]>([]);
 
   const [isDeductionMode, setIsDeductionMode] = useState(false);
+  const [isDetectingStucco, setIsDetectingStucco] = useState(false);
   const [pendingPreset, setPendingPreset] = useState<PresetScale | null>(null);
 
   const [showNewItemModal, setShowNewItemModal] = useState(false);
@@ -411,6 +413,47 @@ const AppContent: React.FC = () => {
       });
     });
     addToast(`Added ${shapesToAdd.length} shapes`, 'success');
+  };
+
+  // Find stucco on the current page from the drawing's hatch and add it as an area item.
+  const handleDetectStucco = async () => {
+    const plan = getActivePlanDetails();
+    const scale = getCurrentPageScale();
+    if (!plan) { addToast("Load a plan first", 'error'); return; }
+    if (!scale.isSet) { addToast("Set the scale for this page first", 'error'); return; }
+    if (!mupdfController.isDocumentLoaded()) { addToast("The page is still loading", 'info'); return; }
+    setIsDetectingStucco(true);
+    try {
+      const vectors = mupdfController.extractVectors(plan.localPageIndex);
+      if (vectors.dots.length < 8) { addToast("No stucco hatch found on this page", 'info'); return; }
+      const ppu = scale.pixelsPerUnit;
+      const result = await detectStuccoRegions(vectors, defaultDetectParams(vectors, ppu));
+      if (!result.regions.length) { addToast("No stucco regions found on this page", 'info'); return; }
+      const unit = getAreaUnitFromLinear(scale.unit);
+      const shapes: Shape[] = [];
+      for (const r of result.regions) {
+        const outer = r.exterior.slice(0, -1).map(([x, y]) => ({ x, y }));
+        if (outer.length < 3) continue;
+        shapes.push({ id: crypto.randomUUID(), pageIndex, points: outer, value: getScaledArea(calculatePolygonArea(outer), ppu), deduction: false });
+        for (const h of r.holes) {
+          const hole = h.slice(0, -1).map(([x, y]) => ({ x, y }));
+          if (hole.length >= 3) shapes.push({ id: crypto.randomUUID(), pageIndex, points: hole, value: getScaledArea(calculatePolygonArea(hole), ppu), deduction: true });
+        }
+      }
+      const item: TakeoffItem = {
+        id: crypto.randomUUID(), label: `Stucco - ${plan.name} p.${plan.localPageIndex + 1} (detected)`, type: ToolType.AREA,
+        color: generateColor(items.length), unit, shapes, totalValue: 0, group: 'Stucco', visible: true,
+      };
+      item.totalValue = calculateTotalValue(item.shapes, item);
+      setHistory(draft => { draft.items.push(item); });
+      const cutouts = shapes.filter(s => s.deduction).length;
+      addToast(`Detected ${result.regions.length} stucco region(s), ${cutouts} cutout(s): ${item.totalValue.toFixed(1)} ${unit}`, 'success');
+    } catch (e) {
+      console.error("Stucco detection failed", e);
+      addToast("Stucco detection failed. See console.", 'error');
+    } finally {
+      setIsDetectingStucco(false);
+    }
   };
 
   const handleShapeCreated = (shape: Shape) => {
@@ -823,6 +866,7 @@ const AppContent: React.FC = () => {
                 isLegendVisible={currentLegend.visible ?? true} onToggleLegend={() => handleUpdateLegend({ visible: !(currentLegend.visible ?? true) })}
                 isPageScaled={currentScale.isSet}
                 onOpenSearch={() => setShowPDFSearch(prev => !prev)}
+                onDetectStucco={handleDetectStucco} isDetectingStucco={isDetectingStucco}
                 isSearchOpen={showPDFSearch} />
             )}
             <BlueprintCanvas

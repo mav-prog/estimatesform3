@@ -1,4 +1,5 @@
 import * as mupdf from 'mupdf';
+import { extractPageVectors, PageVectors } from './stuccoVectors';
 
 // Define simplified types based on MuPDF API
 export interface MuPDFPage {
@@ -110,6 +111,19 @@ class MuPDFController {
             this.displayListCache.set(pageIndex, displayList);
             console.log(`MuPDF: Created DisplayList for page ${pageIndex} (cache size: ${this.displayListCache.size})`);
             return displayList;
+        } finally {
+            page.destroy();
+        }
+    }
+
+    /**
+     * Linework segments and hatch dots of a page, for stucco detection.
+     */
+    extractVectors(pageIndex: number): PageVectors {
+        if (!this.currentDoc) throw new Error("No document loaded");
+        const page = this.currentDoc.loadPage(pageIndex);
+        try {
+            return extractPageVectors(page);
         } finally {
             page.destroy();
         }

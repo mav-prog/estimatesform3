@@ -31,3 +31,4 @@ estimates/out/
 __pycache__/
 estimates/jobs/*
 !estimates/jobs/sample-stucco-test-sheet.json
+.bundles/

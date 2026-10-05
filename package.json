@@ -10,7 +10,8 @@
     "tauri": "tauri",
     "dev:web": "vite --config vite.web.config.ts",
     "build:web": "vite build --config vite.web.config.ts",
-    "preview:web": "vite preview --config vite.web.config.ts"
+    "preview:web": "vite preview --config vite.web.config.ts",
+    "bundle:stucco": "esbuild utils/stuccoGeometry.ts --bundle --format=esm --platform=node --outfile=.bundles/stuccoGeometry.mjs && esbuild utils/stuccoVectors.ts --bundle --format=esm --platform=node --external:mupdf --outfile=.bundles/stuccoVectors.mjs"
   },
   "dependencies": {
     "@fontsource-variable/nunito-sans": "^5.2.7",
@@ -30,11 +31,13 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "concaveman": "^1.2.1",
     "html2canvas": "^1.4.1",
     "immer": "^11.0.1",
     "jose": "^6.1.3",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.4",
+    "jsts": "^2.12.1",
     "jszip": "^3.10.1",
     "konva": "^10.0.12",
     "lucide-react": "^0.555.0",
@@ -56,6 +59,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@tauri-apps/cli": "^2.0.0",
+    "@types/concaveman": "^1.1.6",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.22",

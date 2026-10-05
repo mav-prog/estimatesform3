@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MousePointer2, Ruler, Spline, Scan, Hash, ZoomIn, ZoomOut, ChevronDown, Activity, Undo, Redo, ArrowLeftRight, MessageSquare, Type, VectorSquare, Waypoints, RulerDimensionLine, List, Search } from 'lucide-react';
+import { MousePointer2, Ruler, Spline, Scan, Hash, ZoomIn, ZoomOut, ChevronDown, Activity, Undo, Redo, ArrowLeftRight, MessageSquare, Type, VectorSquare, Waypoints, RulerDimensionLine, List, Search, Sparkles, Loader2 } from 'lucide-react';
 import { ToolType } from '../types';
 import { PRESET_SCALES, PresetScale } from '../utils/geometry';
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,8 @@ interface ToolsProps {
   isPageScaled: boolean;
   // PDF features
   onOpenSearch?: () => void;
+  onDetectStucco?: () => void;
+  isDetectingStucco?: boolean;
   isSearchOpen?: boolean;
 }
 
@@ -57,6 +59,8 @@ const Tools: React.FC<ToolsProps> = ({
   onToggleLegend,
   isPageScaled,
   onOpenSearch,
+  onDetectStucco,
+  isDetectingStucco,
   isSearchOpen,
 }) => {
   const displayScale = Math.round(scale * 100);
@@ -252,6 +256,22 @@ const Tools: React.FC<ToolsProps> = ({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Fill Area (6)</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onDetectStucco?.()}
+                  disabled={!onDetectStucco || isDetectingStucco}
+                  className="h-9 w-9"
+                  aria-label="Detect stucco"
+                >
+                  {isDetectingStucco ? <Loader2 size={20} strokeWidth={2} className="animate-spin" /> : <Sparkles size={20} strokeWidth={2} />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Detect stucco from the drawing's hatch</TooltipContent>
             </Tooltip>
 
             <Tooltip>
