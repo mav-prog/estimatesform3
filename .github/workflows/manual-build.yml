@@ -1,4 +1,4 @@
-name: 'Manual Windows Build'
+name: 'Manual Build'
 
 on:
   workflow_dispatch:
@@ -28,6 +28,38 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: --target x86_64-pc-windows-msvc --bundles msi,nsis --config src-tauri/tauri.microsoftstore.conf.json
+          tagName: manual-build-v__VERSION__
+          releaseName: 'Manual Build v__VERSION__'
+          releaseBody: 'Manual build artifacts.'
+          releaseDraft: true
+          prerelease: true
+
+  build-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+
+      - name: install frontend dependencies
+        run: npm ci
+
+      - name: Build macOS App (universal DMG)
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --target universal-apple-darwin
           tagName: manual-build-v__VERSION__
           releaseName: 'Manual Build v__VERSION__'
           releaseBody: 'Manual build artifacts.'
