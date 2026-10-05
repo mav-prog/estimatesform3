@@ -1,0 +1,98 @@
+{
+  "trade": "EIFS",
+  "scope_code": "EIF",
+  "status": "DFW high-end contractor market pricing (2026) set 2026-10-05 for small commercial EIFS; review before sending",
+  "rounding": { "sq ft": "ceil", "ft": "ceil", "EA": "ceil", "LS": "none" },
+  "items": {
+    "EIFS_SYSTEM": {
+      "name": "Exterior Insulation and Finish System (EIFS)",
+      "description": "Furnish and install a complete EIFS assembly over the prepared substrate: manufacturer's adhesive, EPS insulation board (thickness per the wall section details), polymer-modified base coat with fully embedded reinforcing mesh, primer, and acrylic finish coat in the specified color and texture. Includes backwrapped terminations, EIFS control joints, and backer rod with sealant at all terminations. Priced at DFW high-end contractor rates.",
+      "unit": "sq ft",
+      "unit_price": 15.00
+    },
+    "CONTROL_JOINT": {
+      "name": "EIFS Control Joint",
+      "description": "Backwrapped EIFS control joint with sealant, at the locations shown on the elevations.",
+      "unit": "ft",
+      "included_in": "EIFS_SYSTEM"
+    },
+    "TERMINATION": {
+      "name": "EIFS Termination",
+      "description": "Backwrapped termination with backer rod and sealant where EIFS meets fascia, canopy, battens or other materials.",
+      "unit": "ft",
+      "included_in": "EIFS_SYSTEM"
+    },
+    "HIGH_WORK": {
+      "name": "Scaffolding / Lift for Work Above 12 ft",
+      "description": "Scaffold or lift setup, moves and dismantle for wall areas above 12 ft, priced on the affected wall area.",
+      "unit": "sq ft",
+      "unit_price": 1.50
+    },
+    "SMALL_JOB_PREMIUM": {
+      "name": "Small Project Premium (under 500 sq ft)",
+      "description": "Fixed setup, mixing, color matching and crew time that a scope under 500 sq ft does not absorb in production footage. Applied at 20% of the EIFS system lines.",
+      "unit": "LS",
+      "percent_of": "EIFS_SYSTEM",
+      "percent": 20
+    },
+    "MOBILIZATION": {
+      "name": "Mobilization",
+      "description": "Mobilization sized to the scaffolding requirement: scaffold or lift delivery, setup, moves between facades, and pickup. Priced per job.",
+      "unit": "LS",
+      "unit_price": null
+    }
+  },
+  "takeoff_map": [
+    { "match": "eifs|stucco", "code": "EIFS_SYSTEM" },
+    { "match": "control", "code": "CONTROL_JOINT" },
+    { "match": "termination|trim|edge", "code": "TERMINATION" },
+    { "match": "high work|scaffold|lift", "code": "HIGH_WORK" }
+  ],
+  "scope_intro_exceptions": "",
+  "scope_sections": [
+    {
+      "title": "Substrate Verification",
+      "bullets": [
+        "Inspect the sheathing and the weather-resistive barrier installed by others; report defects before any board is set.",
+        "Confirm substrate flatness and fastener seating; the EIFS manufacturer's substrate requirements govern."
+      ]
+    },
+    {
+      "title": "Insulation Board",
+      "bullets": [
+        "EPS insulation board, thickness per the wall section details, adhesively attached per the manufacturer's written instructions with joints staggered and offset from substrate joints and openings.",
+        "Board rasped flat; all terminations and edges backwrapped with reinforcing mesh."
+      ]
+    },
+    {
+      "title": "Base Coat and Reinforcing Mesh",
+      "bullets": [
+        "Polymer-modified base coat with standard reinforcing mesh fully embedded, no mesh color visible, minimum dry thickness per the manufacturer.",
+        "Detail mesh at all corners, terminations and control joints."
+      ]
+    },
+    {
+      "title": "Finish Coat",
+      "bullets": [
+        "Acrylic finish coat in the specified color and texture from an approved sample panel, applied continuously panel by panel so that stops occur only at control joints and terminations.",
+        "Primer applied where required by the manufacturer for color uniformity."
+      ]
+    },
+    {
+      "title": "Control Joints, Terminations and Sealants",
+      "bullets": [
+        "EIFS control joints at the locations shown on the elevations, backwrapped and sealed.",
+        "Backer rod and sealant compatible with the EIFS at all terminations against fascia, canopy, battens, trim and penetrations."
+      ]
+    },
+    {
+      "title": "Protection and Cleanup",
+      "bullets": [
+        "Mask and protect adjacent finishes, canopies, storefront, paving and landscaping.",
+        "Daily cleanup and removal of EIFS debris; site left broom clean."
+      ]
+    }
+  ],
+  "exclusions": "This estimate does not include signage, sign attachment blocking or sign penetrations; aluminum batten systems, ACM wall panels, fiber cement siding and trim, metal fascia, coping or canopies; sheathing, framing or weather-resistive barrier repairs or installation; painting of other materials; engineering, permits or inspection fees; demolition of existing finishes; work on elevations or surfaces other than those listed in the estimate details; and color or texture changes after the finish sample is approved.",
+  "payment_terms": "To be discussed and agreed upon prior to project commencement. Estimate valid for 30 days."
+}

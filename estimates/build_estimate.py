@@ -112,6 +112,11 @@ def price_lines(lines, rates):
             parent = rates["items"][rate["included_in"]]
             included.append({**ln, "name": rate["name"], "unit": unit, "raw_qty": raw, "qty": qty, "parent": parent["name"], "parent_code": rate["included_in"]})
             continue
+        if rate.get("percent_of"):
+            # priced after the other lines, as a share of the lines it refers to
+            priced.append({**ln, "name": rate["name"], "description": rate["description"], "unit": "LS", "raw_qty": 1.0, "qty": 1.0,
+                           "unit_price": None, "total": None, "percent_of": rate["percent_of"], "percent": float(rate["percent"])})
+            continue
         unit_price = ln.get("unit_price", rate.get("unit_price"))
         if unit_price is None:
             raise SystemExit(f"{ln['code']} is priced per job: set unit_price on that line in the job file")
@@ -120,6 +125,11 @@ def price_lines(lines, rates):
         total = round(qty * unit_price, 2)
         priced.append({**ln, "name": rate["name"], "description": rate["description"], "unit": unit,
                        "raw_qty": raw, "qty": qty, "unit_price": unit_price, "total": total})
+    for p in priced:
+        if p.get("percent_of"):
+            base = sum(q["total"] for q in priced if q["code"] == p["percent_of"] and q["total"] is not None)
+            assert base > 0, f"{p['code']} refers to {p['percent_of']}, which has no priced lines"
+            p["unit_price"] = p["total"] = round(base * p["percent"] / 100, 2)
     grand = round(sum(p["total"] for p in priced), 2)
     assert abs(grand - sum(round(p["qty"] * p["unit_price"], 2) for p in priced)) < 0.005
     priced_codes = {p["code"] for p in priced}
