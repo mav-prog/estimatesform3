@@ -13,6 +13,7 @@ stucco-takeoff-estimate/
 ├── README.md                    this file
 ├── scripts/
 │   ├── requirements.txt         pymupdf, shapely, reportlab, Pillow
+│   ├── check_env.py             verifies the Python setup; run first on a new machine
 │   ├── takeoff_common.py        vector extraction, snap-rounded polygonization, drawing helpers
 │   ├── scan_sheets.py           inventory of a plan set (sizes, scales, finish keywords, hatch dots)
 │   ├── sheet_levels.py          plate and floor line y values of an elevation sheet
@@ -42,8 +43,11 @@ stucco-takeoff-estimate/
 ## Quick start
 
 ```bash
-pip install -r scripts/requirements.txt
 cd scripts
+python3 check_env.py                 # lists missing packages; on a locked-down Mac make a venv first:
+                                     #   python3 -m venv ~/.venvs/stucco && source ~/.venvs/stucco/bin/activate
+pip install -r requirements.txt      # pymupdf, shapely, reportlab, Pillow (prebuilt wheels, no compiler needed)
+python3 check_env.py                 # must print "ready"
 
 # 1. What is on the set?
 python3 scan_sheets.py ../plans/set.pdf --dots

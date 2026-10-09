@@ -23,10 +23,16 @@ your job is to make the review fast and the quantities defensible.
 ## Setup
 
 ```bash
-pip install -r scripts/requirements.txt       # pymupdf, shapely, reportlab, Pillow
 cd scripts                                    # scripts import each other from here
+python3 check_env.py                          # says what is missing and how to install it
+pip install -r requirements.txt               # pymupdf, shapely, reportlab, Pillow
 ```
-Everything is Python 3.10+. Work in a fresh folder per job; copy the plans into it.
+Everything is Python 3.10+. shapely and pymupdf ship prebuilt wheels for macOS (Apple
+Silicon and Intel), Linux and Windows, so pip is enough; no Homebrew or compiler needed.
+If the system Python refuses installs ("externally managed environment"), make a virtual
+environment first: `python3 -m venv ~/.venvs/stucco && source ~/.venvs/stucco/bin/activate`.
+Run `check_env.py` again until it prints "ready". Work in a fresh folder per job; copy the
+plans into it.
 
 ## Workflow
 
