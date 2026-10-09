@@ -1,0 +1,183 @@
+{
+  "trade": "Stucco",
+  "scope_code": "STC",
+  "status": "Stucco square-foot rate set by Marco (2026-09-21); above-12-ft rate is still a DFW placeholder pending review; accessories are included in the square-foot rate per Marco",
+  "rounding": {
+    "sq ft": "ceil",
+    "ft": "ceil",
+    "EA": "ceil",
+    "LS": "none"
+  },
+  "items": {
+    "STUCCO_3COAT": {
+      "name": "3-Coat Cement Stucco System over Metal Lath",
+      "description": "Furnish and install a three-coat Portland cement stucco system: two layers of Grade D building paper (or approved WRB), 2.5 lb self-furring galvanized metal lath fastened per ASTM C1063, 3/8\" scratch coat, 3/8\" brown coat moist-cured per ASTM C926, and 1/8\" finish coat in owner-selected color and texture. Casing bead, weep screed, corner bead, control joints and expansion joints are included where required. Quantity is net wall area after deducting openings.",
+      "unit": "sq ft",
+      "unit_price": 11.0
+    },
+    "TRIM_TOP_CASING_BEAD": {
+      "name": "Casing Bead / J-Mold Termination",
+      "description": "Galvanized casing bead at wall terminations, set plumb and level, with backer rod and sealant at the finished edge.",
+      "unit": "ft",
+      "included_in": "STUCCO_3COAT"
+    },
+    "OPENING_TREATMENT": {
+      "name": "Opening Treatment at Windows and Doors",
+      "description": "Casing bead at jambs and head, flashing integration with the weather-resistive barrier, and backer rod with sealant at the stucco-to-frame joint. Included in the stucco system price; openings are deducted from the wall area.",
+      "unit": "EA",
+      "included_in": "STUCCO_3COAT"
+    },
+    "WEEP_SCREED": {
+      "name": "Foundation Weep Screed",
+      "description": "Galvanized weep screed at the base of wall, set a minimum of 4\" above grade or 2\" above paving, lapped by the weather-resistive barrier.",
+      "unit": "ft",
+      "included_in": "STUCCO_3COAT"
+    },
+    "CORNER_BEAD": {
+      "name": "Corner Bead",
+      "description": "Galvanized corner bead at outside corners, set plumb with the finish plane on both faces.",
+      "unit": "ft",
+      "included_in": "STUCCO_3COAT"
+    },
+    "CONTROL_JOINT": {
+      "name": "Control Joint",
+      "description": "Galvanized one-piece control joint installed per ASTM C1063 spacing (max 144 sq ft panels, 18 ft between joints), lath cut at the joint.",
+      "unit": "ft",
+      "included_in": "STUCCO_3COAT"
+    },
+    "EXPANSION_JOINT": {
+      "name": "Expansion Joint",
+      "description": "Two-piece galvanized expansion joint at building expansion lines and dissimilar substrates.",
+      "unit": "ft",
+      "included_in": "STUCCO_3COAT"
+    },
+    "HIGH_WORK": {
+      "name": "Scaffolding / Lift for Work Above 12 ft",
+      "description": "Scaffold or lift setup, moves and dismantle for wall areas above 12 ft, priced on the affected wall area.",
+      "unit": "sq ft",
+      "unit_price": 1.25
+    },
+    "FOAM_TRIM": {
+      "name": "Foam Trim at Window and Door Surrounds",
+      "description": "EPS foam trim shapes (6\" profile per the elevations) adhered over the brown coat at window and door surrounds, with fiberglass mesh and base coat wrapped over the shape and the finish coat carried over the trim. Measured at the outside edge of the trim.",
+      "unit": "ft",
+      "unit_price": 12.0
+    },
+    "FOAM_BAND": {
+      "name": "Foam Moulding Bands",
+      "description": "EPS foam belt and header mouldings adhered over the brown coat, meshed and base-coated, finished with the wall. Measured along the band.",
+      "unit": "ft",
+      "unit_price": 10.0
+    },
+    "KEYSTONE": {
+      "name": "Keystones",
+      "description": "Foam keystone at the head of each trimmed opening, meshed, base-coated and finished with the surround.",
+      "unit": "EA",
+      "unit_price": 45.0
+    },
+    "MOBILIZATION": {
+      "name": "Mobilization",
+      "description": "Mobilization sized to the scaffolding requirement for the job: delivery, setup, moves and pickup of scaffold or lift equipment and crew.",
+      "unit": "LS",
+      "unit_price": null
+    }
+  },
+  "takeoff_map": [
+    {
+      "match": "stucco",
+      "code": "STUCCO_3COAT"
+    },
+    {
+      "match": "weep",
+      "code": "WEEP_SCREED"
+    },
+    {
+      "match": "corner",
+      "code": "CORNER_BEAD"
+    },
+    {
+      "match": "control",
+      "code": "CONTROL_JOINT"
+    },
+    {
+      "match": "expansion",
+      "code": "EXPANSION_JOINT"
+    },
+    {
+      "match": "opening|window|door",
+      "code": "OPENING_TREATMENT"
+    },
+    {
+      "match": "high work|scaffold|lift",
+      "code": "HIGH_WORK"
+    },
+    {
+      "match": "top edge|casing|j-?mold|termination",
+      "code": "TRIM_TOP_CASING_BEAD"
+    },
+    {
+      "match": "foam trim|surround",
+      "code": "FOAM_TRIM"
+    },
+    {
+      "match": "moulding|molding|band",
+      "code": "FOAM_BAND"
+    },
+    {
+      "match": "keystone",
+      "code": "KEYSTONE"
+    }
+  ],
+  "scope_intro_exceptions": "",
+  "scope_sections": [
+    {
+      "title": "Surface Preparation and Weather-Resistive Barrier",
+      "bullets": [
+        "Inspect sheathing and framing; report defects to the owner before lath is installed.",
+        "Install two layers of Grade D 60-minute building paper (or one layer over an approved WRB) lapped shingle fashion, minimum 2\" horizontal and 6\" vertical laps.",
+        "Integrate the barrier with window and door flashings so water drains to the exterior."
+      ]
+    },
+    {
+      "title": "Lath and Accessories",
+      "bullets": [
+        "2.5 lb/sq yd self-furring galvanized expanded metal lath (ASTM C847), long dimension across supports, lapped 1\" at sides and 2\" at ends, fastened 7\" o.c. into framing per ASTM C1063.",
+        "Galvanized casing bead at terminations and around openings, weep screed at the base of wall set a minimum of 4\" above grade or 2\" above paving, and corner bead at outside corners.",
+        "Control joints and expansion joints per ASTM C1063 (panels not exceeding 144 sq ft, joints not more than 18 ft apart, and at building expansion lines).",
+        "All of the above accessories are included in the stucco system price where required."
+      ]
+    },
+    {
+      "title": "Scratch and Brown Coats",
+      "bullets": [
+        "3/8\" scratch coat, scored horizontally, moist-cured a minimum of 48 hours.",
+        "3/8\" brown coat, rodded and floated true to a 1/4\" in 10 ft tolerance, moist-cured a minimum of 48 hours and allowed to cure 7 days before finish.",
+        "Mix designs per ASTM C926, Type S masonry cement or Portland/lime as approved."
+      ]
+    },
+    {
+      "title": "Finish Coat",
+      "bullets": [
+        "1/8\" cementitious finish coat in the owner-selected color and texture from an approved sample.",
+        "Finish applied in one continuous operation per elevation to avoid cold joints; work stops only at corners, joints or terminations."
+      ]
+    },
+    {
+      "title": "Foam Trim and Mouldings",
+      "bullets": [
+        "EPS foam trim shapes and moulding bands per the elevations, adhered with polymer-modified base coat over the brown coat and secured with mechanical fasteners where the profile requires.",
+        "Each shape wrapped with fiberglass mesh embedded in base coat, with the finish coat carried continuously over trim and wall.",
+        "Keystones centered on the head trim of each opening shown with a keystone."
+      ]
+    },
+    {
+      "title": "Protection and Cleanup",
+      "bullets": [
+        "Mask and protect windows, doors, roofing, paving and landscaping adjacent to the work.",
+        "Daily cleanup and removal of stucco debris; site left broom clean."
+      ]
+    }
+  ],
+  "exclusions": "This estimate does not include painting, sealers or elastomeric coatings over the finish coat; repair or replacement of sheathing, framing or existing substrates; window and door flashings (integration with existing flashings only); engineering, permits or inspection fees; demolition or removal of existing finishes; scaffolding or lifts for work above 12 ft unless listed; sealant at dissimilar materials other than at stucco terminations and openings; repair of landscaping, hardscape or irrigation; and color or texture changes after the finish sample is approved.",
+  "payment_terms": "To be discussed and agreed upon prior to project commencement. Estimate valid for 30 days."
+}

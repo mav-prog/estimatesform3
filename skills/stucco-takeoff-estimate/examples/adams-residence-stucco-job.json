@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-09",
+  "rates": "stucco",
+  "client": {
+    "name": "Adams Construction",
+    "company": "",
+    "email": "",
+    "phone": ""
+  },
+  "project": "Adams Residence, 10 Summit Pl., Cedar Hill, TX. Exterior stucco for the main house and the detached house per JWB Design Studio plan 25376-R3 dated 09/18/26, elevations A8 to A11 and A17, wall sections on A12.",
+  "scope_summary": "Three-coat cement stucco over metal lath on all exterior stucco walls of the three-level main house and the detached house, net of openings, including dormer fronts, the front pediment, the rear gable, attic-level walls and both chimneys; foam trim, keystones and moulding bands per the elevations; work above 12 ft and mobilization included.",
+  "lines": [
+    {
+      "code": "STUCCO_3COAT",
+      "phase": "Main house",
+      "qty": 5499.2,
+      "detail": "Main house exterior walls net of openings, roofs, columns and railings: front 1,643, left 1,074, rear 1,648 and right 1,134 sq ft, including the four front and three rear dormer fronts, the front pediment, the rear gable, the attic-level walls, the walls behind the front portico and rear porches, and both chimneys.",
+      "source": "sheets A8 to A11, elevations at 1/4\" = 1'-0\""
+    },
+    {
+      "code": "HIGH_WORK",
+      "phase": "Main house",
+      "qty": 2656.5,
+      "detail": "Main house wall area above 12 ft: second floor, attic level, dormers, pediment and chimneys.",
+      "source": "sheets A8 to A11, measured from the first finish floor line"
+    },
+    {
+      "code": "FOAM_TRIM",
+      "phase": "Main house",
+      "qty": 1584,
+      "detail": "6\" trim with keystone at 66 window and door surrounds (front 23, left 9, rear 22, right 12), allowed at 24 ft per opening.",
+      "source": "sheets A8 to A11, note 6\" TRIM w/KEYSTONE"
+    },
+    {
+      "code": "KEYSTONE",
+      "phase": "Main house",
+      "qty": 66,
+      "detail": "One per trimmed opening.",
+      "source": "sheets A8 to A11"
+    },
+    {
+      "code": "FOAM_BAND",
+      "phase": "Main house",
+      "qty": 640,
+      "detail": "Belt moulding at the second floor line (about 315 ft), second floor window header moulding (about 230 ft) and the front center block entablature bands (about 95 ft).",
+      "source": "sheets A8 to A11, note MOULDING"
+    },
+    {
+      "code": "STUCCO_3COAT",
+      "phase": "Detached house",
+      "qty": 1403.9,
+      "detail": "Detached house exterior walls net of openings: front 551, rear 525, left 232 and right 97 sq ft, including the front gable and two dormer fronts and the wall behind the front porch.",
+      "source": "sheet A17, elevations 1 to 4 at 1/4\" = 1'-0\""
+    },
+    {
+      "code": "HIGH_WORK",
+      "phase": "Detached house",
+      "qty": 100.9,
+      "detail": "Detached house front gable above 12 ft.",
+      "source": "sheet A17"
+    },
+    {
+      "code": "FOAM_TRIM",
+      "phase": "Detached house",
+      "qty": 288,
+      "detail": "6\" trim with keystone at 12 window and door surrounds, allowed at 24 ft per opening.",
+      "source": "sheet A17"
+    },
+    {
+      "code": "KEYSTONE",
+      "phase": "Detached house",
+      "qty": 12,
+      "detail": "One per trimmed opening.",
+      "source": "sheet A17"
+    },
+    {
+      "code": "MOBILIZATION",
+      "phase": "Both buildings",
+      "qty": 1,
+      "unit_price": 7500.0,
+      "detail": "Scaffolding for three-level work on all sides of the main house and the detached house: delivery, erection, moves and pickup, one mobilization for both buildings.",
+      "source": ""
+    }
+  ],
+  "owner_furnished_note": "",
+  "exclusions_extra": "Dentil cornices, soffits, fascia, columns, balustrade railings, balcony and porch ceilings, and the slab edge below the first finish floor line are not included. Window and door surrounds and mouldings are priced as EPS foam shapes with a stucco finish; if the trim and keystones are cast stone by others, the foam trim, keystone and moulding lines are deleted. The ZIP System R-6 sheathing and liquid flashing shown on the wall sections are by the framer; M3 provides the drainage layer, lath and accessories over it.",
+  "output": "M3_Estimate_AdamsConstruction_Stucco.pdf"
+}

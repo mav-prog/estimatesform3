@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-05",
+  "rates": "eifs",
+  "client": {
+    "name": "General Contractor to be confirmed",
+    "company": "",
+    "email": "",
+    "phone": ""
+  },
+  "project": "McDonald's Store 042-3513, Godley, TX (JAW 24-0154, 2024 Standard Building BB20, Revision 3 dated 07/27/26). EIFS bands at the Front and Non-Drive-Thru elevations per sheet A2.0.",
+  "scope_summary": "EIFS in Iron Ore SW 7069 at the two 29 ft canopy bands between the aluminum batten towers, from the top of canopy to the 18'-3\" fascia line, including control joints and terminations; work above 12 ft and mobilization included.",
+  "lines": [
+    {
+      "code": "EIFS_SYSTEM",
+      "qty": 195.75,
+      "detail": "Front elevation band, 29'-0\" x 6'-9\", panels 9'-0\", 11'-0\", 9'-0\".",
+      "source": "sheet A2.0, 1/A2.0 Front Elevation, tag E"
+    },
+    {
+      "code": "EIFS_SYSTEM",
+      "qty": 195.75,
+      "detail": "Non-drive-thru elevation band, 29'-0\" x 6'-9\", panels 9'-0\", 11'-0\", 9'-0\".",
+      "source": "sheet A2.0, 2/A2.0 Non-Drive-Thru Elevation, tag E"
+    },
+    {
+      "code": "CONTROL_JOINT",
+      "qty": 27,
+      "detail": "Four vertical joints, two per band.",
+      "source": "tags CJ type 1 on A2.0"
+    },
+    {
+      "code": "TERMINATION",
+      "qty": 143,
+      "detail": "Top at metal fascia, bottom at canopy, and ends at battens, both bands.",
+      "source": "band perimeters on A2.0"
+    },
+    {
+      "code": "HIGH_WORK",
+      "qty": 362.5,
+      "detail": "Both bands from 12'-0\" to 18'-3\".",
+      "source": "band elevations on A2.0"
+    },
+    {
+      "code": "SMALL_JOB_PREMIUM",
+      "qty": 1,
+      "detail": "Total EIFS scope is 392 sq ft.",
+      "source": ""
+    },
+    {
+      "code": "MOBILIZATION",
+      "qty": 1,
+      "unit_price": 1500.0,
+      "detail": "Scaffold or lift at two facades, 29 ft each, delivery, two setups and pickup.",
+      "source": ""
+    }
+  ],
+  "owner_furnished_note": "",
+  "exclusions_extra": "The drive-thru and rear elevations carry no EIFS. The EIFS wall section details 6/A5.3 and 7/A5.3 were not in the drawings provided; insulation thickness and the manufacturer's system are to be confirmed from those sheets.",
+  "output": "M3_Estimate_McDonaldsGodley_EIFS.pdf"
+}
