@@ -2,13 +2,18 @@
   "trade": "EIFS",
   "scope_code": "EIF",
   "status": "DFW high-end contractor market pricing (2026) set 2026-10-05 for small commercial EIFS; review before sending",
-  "rounding": { "sq ft": "ceil", "ft": "ceil", "EA": "ceil", "LS": "none" },
+  "rounding": {
+    "sq ft": "ceil",
+    "ft": "ceil",
+    "EA": "ceil",
+    "LS": "none"
+  },
   "items": {
     "EIFS_SYSTEM": {
       "name": "Exterior Insulation and Finish System (EIFS)",
       "description": "Furnish and install a complete EIFS assembly over the prepared substrate: manufacturer's adhesive, EPS insulation board (thickness per the wall section details), polymer-modified base coat with fully embedded reinforcing mesh, primer, and acrylic finish coat in the specified color and texture. Includes backwrapped terminations, EIFS control joints, and backer rod with sealant at all terminations. Priced at DFW high-end contractor rates.",
       "unit": "sq ft",
-      "unit_price": 15.00
+      "unit_price": 15.0
     },
     "CONTROL_JOINT": {
       "name": "EIFS Control Joint",
@@ -26,7 +31,7 @@
       "name": "Scaffolding / Lift for Work Above 12 ft",
       "description": "Scaffold or lift setup, moves and dismantle for wall areas above 12 ft, priced on the affected wall area.",
       "unit": "sq ft",
-      "unit_price": 1.50
+      "unit_price": 1.5
     },
     "SMALL_JOB_PREMIUM": {
       "name": "Small Project Premium (under 500 sq ft)",
@@ -37,16 +42,28 @@
     },
     "MOBILIZATION": {
       "name": "Mobilization",
-      "description": "Mobilization sized to the scaffolding requirement: scaffold or lift delivery, setup, moves between facades, and pickup. Priced per job.",
+      "description": "Mobilization sized to the scaffolding requirement for the job: delivery, setup, moves and pickup of scaffold or lift equipment and crew.",
       "unit": "LS",
       "unit_price": null
     }
   },
   "takeoff_map": [
-    { "match": "eifs|stucco", "code": "EIFS_SYSTEM" },
-    { "match": "control", "code": "CONTROL_JOINT" },
-    { "match": "termination|trim|edge", "code": "TERMINATION" },
-    { "match": "high work|scaffold|lift", "code": "HIGH_WORK" }
+    {
+      "match": "eifs|stucco",
+      "code": "EIFS_SYSTEM"
+    },
+    {
+      "match": "control",
+      "code": "CONTROL_JOINT"
+    },
+    {
+      "match": "termination|trim|edge",
+      "code": "TERMINATION"
+    },
+    {
+      "match": "high work|scaffold|lift",
+      "code": "HIGH_WORK"
+    }
   ],
   "scope_intro_exceptions": "",
   "scope_sections": [

@@ -193,7 +193,20 @@ def build(job, rates, out_path, takeoff_note=None):
     story.append(Paragraph("Estimate Details", h))
     rows = [[Paragraph("Description", head_w), Paragraph("Qty", head_wr), Paragraph("Unit Price", head_wr), Paragraph("Total", head_wr)]]
     seen = set()
+    phase_rows, subtotal_rows, cur_phase, phase_sum = [], [], None, 0.0
+    phases = any(p.get("phase") for p in priced)
+    def close_phase():
+        if cur_phase is not None:
+            subtotal_rows.append(len(rows))
+            rows.append(["", "", Paragraph(f"<b>Subtotal, {esc(cur_phase)}</b>", cell_r), Paragraph(f"<b>{money(round(phase_sum, 2))}</b>", cell_r)])
     for p in priced:
+        if phases and p.get("phase") != cur_phase:
+            close_phase()
+            cur_phase, phase_sum = p.get("phase"), 0.0
+            if cur_phase is not None:
+                phase_rows.append(len(rows))
+                rows.append([Paragraph(f"<b>{esc(cur_phase)}</b>", cell), "", "", ""])
+        phase_sum += p["total"]
         if p["code"] in seen:
             desc = f"<b>{esc(p['name'])}.</b> As specified above."
         else:
@@ -203,13 +216,24 @@ def build(job, rates, out_path, takeoff_note=None):
             desc += f" {esc(p['detail'])}"
         rows.append([Paragraph(desc, cell), Paragraph(fmt_qty(p["qty"], p["unit"]), cell_r),
                      Paragraph(f"{money(p['unit_price'])}/{p['unit']}", cell_r), Paragraph(money(p["total"]), cell_r)])
+    if phases:
+        close_phase()
     rows.append(["", "", Paragraph("<b>Grand Total</b>", cell_r), Paragraph(f'<b><font color="#A31F34">{money(grand)}</font></b>', cell_r)])
     t = Table(rows, colWidths=[W * 0.56, W * 0.14, W * 0.15, W * 0.15], repeatRows=1)
     style = [("BACKGROUND", (0, 0), (-1, 0), CRIMSON), ("VALIGN", (0, 0), (-1, -1), "TOP"),
              ("GRID", (0, 0), (-1, -2), 0.4, GRID), ("LINEABOVE", (2, -1), (-1, -1), 0.8, CRIMSON),
              ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5)]
+    shade = 0
     for i in range(1, len(rows) - 1):
-        if i % 2 == 0:
+        if i in phase_rows:
+            style += [("SPAN", (0, i), (-1, i)), ("BACKGROUND", (0, i), (-1, i), TINT), ("TEXTCOLOR", (0, i), (0, i), CRIMSON)]
+            shade = 0
+            continue
+        if i in subtotal_rows:
+            style += [("LINEABOVE", (2, i), (-1, i), 0.6, CRIMSON)]
+            continue
+        shade += 1
+        if shade % 2 == 0:
             style.append(("BACKGROUND", (0, i), (-1, i), TINT))
     t.setStyle(TableStyle(style))
     story.append(t)
@@ -226,7 +250,7 @@ def build(job, rates, out_path, takeoff_note=None):
                 part += f" ({inc['detail'].rstrip('.')})"
             parts.append(part)
         notes.append(f"Included in the {esc(included[0]['parent'].lower())} price: " + "; ".join(esc(x) for x in parts) + ".")
-    srcs = [p["source"] for p in priced + included if p.get("source")]
+    srcs = list(dict.fromkeys(p["source"] for p in priced + included if p.get("source")))
     if srcs:
         notes.append("Quantities from takeoff: " + "; ".join(esc(s) for s in srcs) + ". Areas and lengths rounded up to whole units for pricing.")
     for n in notes:

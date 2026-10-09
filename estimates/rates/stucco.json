@@ -57,9 +57,27 @@
       "unit": "sq ft",
       "unit_price": 1.25
     },
+    "FOAM_TRIM": {
+      "name": "Foam Trim at Window and Door Surrounds",
+      "description": "EPS foam trim shapes (6\" profile per the elevations) adhered over the brown coat at window and door surrounds, with fiberglass mesh and base coat wrapped over the shape and the finish coat carried over the trim. Measured at the outside edge of the trim.",
+      "unit": "ft",
+      "unit_price": 12.0
+    },
+    "FOAM_BAND": {
+      "name": "Foam Moulding Bands",
+      "description": "EPS foam belt and header mouldings adhered over the brown coat, meshed and base-coated, finished with the wall. Measured along the band.",
+      "unit": "ft",
+      "unit_price": 10.0
+    },
+    "KEYSTONE": {
+      "name": "Keystones",
+      "description": "Foam keystone at the head of each trimmed opening, meshed, base-coated and finished with the surround.",
+      "unit": "EA",
+      "unit_price": 45.0
+    },
     "MOBILIZATION": {
       "name": "Mobilization",
-      "description": "Mobilization sized to the scaffolding requirement for the job. Priced per job; set the amount on the job line.",
+      "description": "Mobilization sized to the scaffolding requirement for the job: delivery, setup, moves and pickup of scaffold or lift equipment and crew.",
       "unit": "LS",
       "unit_price": null
     }
@@ -86,16 +104,28 @@
       "code": "EXPANSION_JOINT"
     },
     {
-      "match": "top edge|casing|j-?mold|termination|trim",
-      "code": "TRIM_TOP_CASING_BEAD"
-    },
-    {
       "match": "opening|window|door",
       "code": "OPENING_TREATMENT"
     },
     {
       "match": "high work|scaffold|lift",
       "code": "HIGH_WORK"
+    },
+    {
+      "match": "top edge|casing|j-?mold|termination",
+      "code": "TRIM_TOP_CASING_BEAD"
+    },
+    {
+      "match": "foam trim|surround",
+      "code": "FOAM_TRIM"
+    },
+    {
+      "match": "moulding|molding|band",
+      "code": "FOAM_BAND"
+    },
+    {
+      "match": "keystone",
+      "code": "KEYSTONE"
     }
   ],
   "scope_intro_exceptions": "",
@@ -130,6 +160,14 @@
       "bullets": [
         "1/8\" cementitious finish coat in the owner-selected color and texture from an approved sample.",
         "Finish applied in one continuous operation per elevation to avoid cold joints; work stops only at corners, joints or terminations."
+      ]
+    },
+    {
+      "title": "Foam Trim and Mouldings",
+      "bullets": [
+        "EPS foam trim shapes and moulding bands per the elevations, adhered with polymer-modified base coat over the brown coat and secured with mechanical fasteners where the profile requires.",
+        "Each shape wrapped with fiberglass mesh embedded in base coat, with the finish coat carried continuously over trim and wall.",
+        "Keystones centered on the head trim of each opening shown with a keystone."
       ]
     },
     {
