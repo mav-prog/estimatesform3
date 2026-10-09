@@ -63,6 +63,7 @@ const AppContent: React.FC = () => {
     handleNewProjectConfirmed,
     handleSaveProject,
     handleLoadProjectClick,
+    openProjectFromPath,
     handleImportConfirmed,
     setShowImportConfirm,
     setPendingImportPath,
@@ -760,11 +761,12 @@ const AppContent: React.FC = () => {
     unlisteners.push(listen('new_project', handleNewProjectRequest));
     unlisteners.push(listen('open_project', handleLoadProjectClick));
     unlisteners.push(listen('save_project', handleSaveProject));
+    unlisteners.push(listen<string>('open_file', (e) => openProjectFromPath(e.payload)));
 
     return () => {
       unlisteners.forEach(u => u.then(f => f()));
     };
-  }, [handleNewProjectRequest, handleLoadProjectClick, handleSaveProject]);
+  }, [handleNewProjectRequest, handleLoadProjectClick, handleSaveProject, openProjectFromPath]);
 
   // Check for Stripe success return
   useEffect(() => {

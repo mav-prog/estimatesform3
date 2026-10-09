@@ -1,6 +1,10 @@
 mod license;
 use tauri::menu::{Menu, MenuItem, Submenu, PredefinedMenuItem};
 use tauri::{Emitter, Manager};
+use std::sync::Mutex;
+
+/// A .takeoff path handed to the app by the OS before the webview asked for it.
+struct PendingOpen(Mutex<Option<String>>);
 
 #[tauri::command]
 fn get_startup_args() -> Vec<String> {
@@ -12,11 +16,17 @@ fn read_file_binary(path: String) -> Result<Vec<u8>, String> {
     std::fs::read(path).map_err(|e| e.to_string())
 }
 
+/// Returns, once, the project file the OS asked the app to open (macOS Finder double-click).
+#[tauri::command]
+fn take_pending_open_file(state: tauri::State<'_, PendingOpen>) -> Option<String> {
+    state.0.lock().ok().and_then(|mut pending| pending.take())
+}
+
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-// ... (existing setup code) ...
+        .manage(PendingOpen(Mutex::new(None)))
 
         .setup(|app| {
             let handle = app.handle();
@@ -136,8 +146,30 @@ pub fn run() {
             license::verify_license,
             license::get_machine_id,
             get_startup_args,
-            read_file_binary
+            read_file_binary,
+            take_pending_open_file
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|app_handle, event| {
+            // macOS delivers Finder double-clicks and drag-to-dock as Opened events, not argv.
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            if let tauri::RunEvent::Opened { urls } = &event {
+                let path = urls
+                    .iter()
+                    .filter_map(|u| u.to_file_path().ok())
+                    .map(|p| p.to_string_lossy().into_owned())
+                    .find(|p| p.to_lowercase().ends_with(".takeoff"));
+                if let Some(path) = path {
+                    if let Some(state) = app_handle.try_state::<PendingOpen>() {
+                        if let Ok(mut pending) = state.0.lock() {
+                            *pending = Some(path.clone());
+                        }
+                    }
+                    let _ = app_handle.emit("open_file", path);
+                }
+            }
+            #[cfg(not(any(target_os = "macos", target_os = "ios")))]
+            let _ = (app_handle, &event);
+        });
 }

@@ -3,6 +3,7 @@ import { pickedFile } from './files.web';
 
 export async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   if (cmd === 'get_startup_args') return [] as unknown as T;
+  if (cmd === 'take_pending_open_file') return null as unknown as T;
   if (cmd === 'read_file_binary') {
     const file = pickedFile(String(args?.path ?? ''));
     if (!file) throw new Error(`No picked file named ${String(args?.path)}`);

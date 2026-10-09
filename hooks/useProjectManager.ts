@@ -89,8 +89,16 @@ export const useProjectManager = (isLicensed: boolean) => {
           const args = await invoke<string[]>('get_startup_args');
           console.log("Startup args:", args);
           
-          // Find first argument that looks like a .takeoff file
-          const fileArg = args.find(arg => arg.toLowerCase().endsWith('.takeoff'));
+          // Find first argument that looks like a .takeoff file, or a file the OS
+          // asked us to open before the webview was ready (macOS Finder).
+          let fileArg = args.find(arg => arg.toLowerCase().endsWith('.takeoff'));
+          if (!fileArg) {
+            try {
+              fileArg = (await invoke<string | null>('take_pending_open_file')) ?? undefined;
+            } catch (pendingError) {
+              console.error("Error checking pending open file:", pendingError);
+            }
+          }
           
           if (fileArg) {
             console.log("Attempting to load from argument:", fileArg);
@@ -226,6 +234,13 @@ export const useProjectManager = (isLicensed: boolean) => {
     }
   };
 
+  // A project file handed to the running app by the OS (Finder double-click while open).
+  const openProjectFromPath = useCallback((path: string) => {
+    if (!path.toLowerCase().endsWith('.takeoff')) return;
+    setPendingImportPath(path);
+    setShowImportConfirm(true);
+  }, []);
+
   const handleImportConfirmed = async () => {
     if (!pendingImportPath) return;
     setShowImportConfirm(false);
@@ -284,6 +299,7 @@ export const useProjectManager = (isLicensed: boolean) => {
     handleNewProjectConfirmed,
     handleSaveProject,
     handleLoadProjectClick,
+    openProjectFromPath,
     handleImportConfirmed,
   };
 };

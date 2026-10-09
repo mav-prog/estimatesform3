@@ -58,6 +58,8 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # ad-hoc signature so Gatekeeper treats the app as a signed bundle (right-click, Open)
+          APPLE_SIGNING_IDENTITY: "-"
         with:
           args: --target universal-apple-darwin
           tagName: manual-build-v__VERSION__
